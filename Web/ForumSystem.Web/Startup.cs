@@ -57,7 +57,7 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender>(x => new SendGridEmailSender("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"));
             services.AddTransient<ISettingsService, SettingsService>();
         }
 
