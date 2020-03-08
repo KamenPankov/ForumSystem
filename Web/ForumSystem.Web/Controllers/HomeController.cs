@@ -1,7 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using ForumSystem.Data;
+
+using ForumSystem.Data.Common.Repositories;
+using ForumSystem.Data.Models;
+using ForumSystem.Services.Data;
+using ForumSystem.Services.Mapping;
 using ForumSystem.Web.ViewModels;
 using ForumSystem.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
@@ -10,27 +13,20 @@ namespace ForumSystem.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        private readonly ApplicationDbContext db;
+        private readonly ICategoriesService categoriesService;
 
-        public HomeController(ApplicationDbContext db)
+        public HomeController(ICategoriesService categoriesService)
         {
-            this.db = db;
+            this.categoriesService = categoriesService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            IndexViewModel viewModel = new IndexViewModel();
-            var categories = this.db.Categories
-                .Select(c => new IndexCategoryViewModel()
-                {
-                    Name = c.Name,
-                    Title = c.Title,
-                    Description = c.Description,
-                    ImageUrl = c.ImageUrl,
-                }).ToArray();
-
-            viewModel.Categories = categories;
+            IndexViewModel viewModel = new IndexViewModel()
+            {
+                Categories = this.categoriesService.GetAll<IndexCategoryViewModel>(),
+            };
 
             return this.View(viewModel);
         }

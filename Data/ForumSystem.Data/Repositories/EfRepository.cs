@@ -1,13 +1,13 @@
-﻿namespace ForumSystem.Data.Repositories
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+using ForumSystem.Data.Common.Repositories;
+
+using Microsoft.EntityFrameworkCore;
+
+namespace ForumSystem.Data.Repositories
 {
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
-
-    using ForumSystem.Data.Common.Repositories;
-
-    using Microsoft.EntityFrameworkCore;
-
     public class EfRepository<TEntity> : IRepository<TEntity>
         where TEntity : class
     {
