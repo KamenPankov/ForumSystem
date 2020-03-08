@@ -1,5 +1,6 @@
-﻿using ForumSystem.Data.Common.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using ForumSystem.Data.Common.Models;
 
 namespace ForumSystem.Data.Models
 {

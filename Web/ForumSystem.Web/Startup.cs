@@ -1,26 +1,26 @@
-﻿namespace ForumSystem.Web
+﻿using System.Reflection;
+
+using ForumSystem.Data;
+using ForumSystem.Data.Common;
+using ForumSystem.Data.Common.Repositories;
+using ForumSystem.Data.Models;
+using ForumSystem.Data.Repositories;
+using ForumSystem.Data.Seeding;
+using ForumSystem.Services.Data;
+using ForumSystem.Services.Mapping;
+using ForumSystem.Services.Messaging;
+using ForumSystem.Web.ViewModels;
+
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
+namespace ForumSystem.Web
 {
-    using System.Reflection;
-
-    using ForumSystem.Data;
-    using ForumSystem.Data.Common;
-    using ForumSystem.Data.Common.Repositories;
-    using ForumSystem.Data.Models;
-    using ForumSystem.Data.Repositories;
-    using ForumSystem.Data.Seeding;
-    using ForumSystem.Services.Data;
-    using ForumSystem.Services.Mapping;
-    using ForumSystem.Services.Messaging;
-    using ForumSystem.Web.ViewModels;
-
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-
     public class Startup
     {
         private readonly IConfiguration configuration;
@@ -104,6 +104,7 @@
                 endpoints =>
                     {
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                        endpoints.MapControllerRoute("forumCategory", "f/{name:minlength(3)}", new { controller = "Categories", action = "ByName" });
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
                     });

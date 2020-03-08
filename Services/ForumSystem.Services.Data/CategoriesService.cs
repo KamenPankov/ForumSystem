@@ -1,8 +1,9 @@
-﻿using ForumSystem.Data.Common.Repositories;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+using ForumSystem.Data.Common.Repositories;
 using ForumSystem.Data.Models;
 using ForumSystem.Services.Mapping;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ForumSystem.Services.Data
 {
@@ -25,6 +26,14 @@ namespace ForumSystem.Services.Data
             }
 
             return query.To<T>().ToArray();
+        }
+
+        public T GetByName<T>(string name)
+        {
+            return this.categoriesRepository.All()
+                .Where(c => c.Name == name)
+                .To<T>()
+                .FirstOrDefault();
         }
     }
 }
